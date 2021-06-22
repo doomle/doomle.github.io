@@ -1,0 +1,173 @@
+<!--
+
+    Code is not canon
+    House of Arson is not canon
+    Dylan Robinson is not canon
+
+    Web Development Simulator created by Dylan Robinson
+    Produced and funded by House of Arson
+
+
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Web Development Simulator</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src='main.js'></script>
+
+    <style>
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: auto;
+            background-color: #333;
+            color: #F8F8F8;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-family: Helvetica, Arial, sans-serif;
+
+            position: absolute;
+            z-index: 1;
+
+            right: 8px;
+            bottom: 15px;
+            margin-right:15px;
+            
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+
+        .leftpane {
+            width: 40%;
+            height: 100%;
+            float: left;
+            border-collapse: collapse;
+        } .middlepane {
+            width: 30%;
+            height: 100%;
+            float: left;
+            border-collapse: collapse;
+        } .rightpane {
+            width: 30%;
+            height: 100%;
+            float: right;
+            border-collapse: collapse;
+        }
+        .upperright{
+            position:absolute;
+            top:15px;
+            right: 15px;
+            text-align: right;
+            width: 333px;
+        }
+    </style>
+</head>
+<body style="width:888px;"> 
+
+    <div id="overhead" style="display: none;">
+        <a href=""><img src="images/ad1.png"></a>
+    </div>
+    
+
+    <h1>($<span id="money">0</span>) Web Development Simulator</h1>
+
+    <div id="main" class="leftpane">
+
+        <h2 id="mpsCount" style="margin-bottom: 10px; margin-top: 0;display:none;">$<span id="mps">0</span> per second</h2>
+
+
+        <div class="tooltip">
+            <button onclick="writeHTML();this.blur();">Write HTML</button> <span id="HTMLlines">1</span> lines<br>
+            <span class="tooltiptext">HTML is what gives a webpage content</span>
+        </div>
+
+        <div class="tooltip">
+            <button onclick="writeCSS();this.blur();">Write CSS</button> <span id="CSSlines">1</span> lines<br>
+            <span class="tooltiptext">CSS is what makes a webpage pretty</span>
+        </div>
+
+        <div class="tooltip">
+            <button onclick="writeJS();this.blur();">Write Javascript</button> <span id="JSlines">1</span> lines<br>
+            <span class="tooltiptext">Javascript is what makes a webpage interactive</span>
+        </div>
+
+    </div>
+
+    <div id="shop" class="middlepane" style="display:none;">
+
+        <div class="tooltip">
+            <button onclick="HTMLtutorbuy();this.blur();" id="HTMLTutorButton">Learn HTML</button> <span id="HTMLtutors">0</span><br>
+            <span class="tooltiptext">Costs $<span id="tutorCost">25</span><br>Increase HTML per click</span>
+        </div>
+
+        <div class="tooltip">
+            <button onclick="CSStutorbuy();this.blur();" id="CSSTutorButton">Learn CSS</button> <span id="CSStutors">0</span><br>
+            <span class="tooltiptext">Costs $<span id="CSStutorCost">25</span><br>Increase CSS per click</span>
+        </div>
+
+        <div class="tooltip">
+            <button onclick="JStutorbuy();this.blur();" id="JSTutorButton">Learn Javascript</button> <span id="JStutors">0</span><br>
+            <span class="tooltiptext">Costs $<span id="JStutorCost">25</span><br>Increase Javascript per click</span>
+        </div><br>
+
+        <div id="adsanddonations">
+                <!--should these be somehow multiplied by an external variable, like page popularity?-->
+                <!--great idea, dylan!-->
+            <div class="tooltip" id="ADS">
+                <button onclick="runAds();this.blur();" id="runAdsButton">Run Advertisements</button> <span id="ads">0</span><br>
+                <span class="tooltiptext">Requires <span id="adRequirement">50</span> lines of HTML<br>$1/second, multiplied by page popularity</span>
+            </div>
+            <div class="tooltip" id="DONATIONS">
+                <button onclick="acceptDonations();this.blur();" id="acceptDonationsButton">Add donation button</button> <span id="donationButtons">0</span><br>
+                <span class="tooltiptext">Requires <span id="donationRequirement">250</span> lines of HTML<br>$4/second, multiplied by page popularity</span>
+            </div><br>
+            
+            <button onclick="autoRunAds();this.blur();" id="autoRunAdsButton" style="display: none;">Auto-Run Advertisements</button><br id="autoBr">
+            <button onclick="autoRunDonations();this.blur();" id="autoRunDonationsButton" style="display: none;">Auto-Add Donations</button><br>
+        </div>
+
+    </div>
+
+    <div id="rightpane" class="rightpane" style="display:none;">
+        <div class="tooltip">
+            <button onclick="HTMLcoderbuy();this.blur();" id="HTMLCoderButton">Hire HTML Developer</button> <span id="HTMLcoders">0</span><br>
+            <span class="tooltiptext">Costs $<span id="CoderCost">2</span>/second<br>Writes HTML code for you</span>
+        </div>
+
+        <div class="tooltip">
+            <button onclick="CSScoderbuy();this.blur();" id="CSSCoderButton">Hire CSS Designer</button> <span id="CSScoders">0</span><br>
+            <span class="tooltiptext">Costs $<span id="CSSCoderCost">2</span>/second<br>Writes CSS code for you</span>
+        </div>
+
+        <div class="tooltip">
+            <button onclick="JScoderbuy();this.blur();" id="JSCoderButton">Hire JS Programmer</button> <span id="JScoders">0</span><br>
+            <span class="tooltiptext">Costs $<span id="JSCoderCost">2</span>/second<br>Writes Javascript code for you</span>
+        </div><br>
+
+        <div id="workerPay" style="display:none;">
+            <h2 style="margin-bottom: 10px; margin-top: 0;">Paying workers $<span id="pay">0</span> per second</h2>
+            <span>Each developer writing <span id="workEthic">4</span> lines of code per second.<span> <br>
+            <button onclick="decreasePay();this.blur();" id="decreaseButton">Decrease Pay</button><br>
+            <button onclick="increasePay();this.blur();" id="increaseButton">Increase Pay</button><br>
+        </div>
+    </div>
+
+    <div class="tooltip">
+        <div class="upperright" id="upperright" style="display:none;">
+            <h2>Popularity: <span id="popularity">1</span></h2>
+        </div>
+            <span class="tooltiptext">Page popularity is calculated based on the quality of your webpage</span>
+    </div>
+
+    <footer id="footer" style="position: fixed;bottom: 15px;left: 15px;right: 15px;margin-bottom: 0px;">
+        Created by Kaleb Rubio, funded by Doomle <!-- Created by Dylan Robinson, funded by House of Arson -->
+    </footer>
+    
+</body>
+</html>
